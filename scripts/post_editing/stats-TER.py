@@ -4,7 +4,7 @@ import argparse
 import sys
 import numpy as np
 import re
-from translate.evaluation import corpus_bleu, corpus_ter, corpus_wer, tercom_statistics
+from seq2seq_models.evaluation import corpus_bleu, corpus_ter, corpus_wer, tercom_statistics
 from collections import OrderedDict
 
 parser = argparse.ArgumentParser()

@@ -3,7 +3,7 @@
 import argparse
 import sys
 import numpy as np
-from translate.evaluation import corpus_bleu, corpus_ter
+from seq2seq_models.evaluation import corpus_bleu, corpus_ter
 
 parser = argparse.ArgumentParser()
 parser.add_argument('source1')

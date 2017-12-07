@@ -1,6 +1,6 @@
 import numpy as np
-from translate import utils
-from translate.translation_model import TranslationModel
+from seq2seq_models import utils
+from seq2seq_models.translation_model import TranslationModel
 
 
 class MultiTaskModel:

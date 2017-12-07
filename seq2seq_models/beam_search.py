@@ -1,5 +1,5 @@
 import tensorflow as tf
-from translate import utils
+from seq2seq_models import utils
 
 
 """

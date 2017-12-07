@@ -7,7 +7,7 @@ import numpy as np
 import random
 from scipy.stats import truncnorm
 from collections import Counter
-from translate.evaluation import tercom_statistics
+from seq2seq_models.evaluation import tercom_statistics
 
 parser = argparse.ArgumentParser()
 parser.add_argument('source')

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import argparse
-from translate.utils import reverse_edits
+from seq2seq_models.utils import reverse_edits
 
 parser = argparse.ArgumentParser()
 parser.add_argument('source')

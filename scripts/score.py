@@ -11,7 +11,7 @@ root_dir = os.path.dirname(script_dir)
 sys.path.append(root_dir)
 tercom_path = os.path.join(script_dir, 'tercom.jar')
 
-from translate.evaluation import corpus_bleu, corpus_ter, corpus_wer, corpus_cer, corpus_bleu1
+from seq2seq_models.evaluation import corpus_bleu, corpus_ter, corpus_wer, corpus_cer, corpus_bleu1
 
 parser = argparse.ArgumentParser()
 parser.add_argument('source')

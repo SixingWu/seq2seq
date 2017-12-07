@@ -1,9 +1,9 @@
 import tensorflow as tf
 import math
 from tensorflow.contrib.rnn import BasicLSTMCell, RNNCell, DropoutWrapper, MultiRNNCell
-from translate.rnn import stack_bidirectional_dynamic_rnn, CellInitializer, GRUCell, DropoutGRUCell
-from translate import utils, beam_search
-from translate.conv_lstm import BasicConvLSTMCell
+from seq2seq_models.rnn import stack_bidirectional_dynamic_rnn, CellInitializer, GRUCell, DropoutGRUCell
+from seq2seq_models import utils, beam_search
+from seq2seq_models.conv_lstm import BasicConvLSTMCell
 
 
 def auto_reuse(fun):

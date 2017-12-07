@@ -2,7 +2,7 @@
 
 import argparse
 import numpy as np
-from translate.evaluation import tercom_statistics
+from seq2seq_models.evaluation import tercom_statistics
 from itertools import islice
 
 parser = argparse.ArgumentParser()

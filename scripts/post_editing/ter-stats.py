@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import argparse
-from translate.evaluation import tercom_statistics
+from seq2seq_models.evaluation import tercom_statistics
 
 parser = argparse.ArgumentParser()
 parser.add_argument('source')

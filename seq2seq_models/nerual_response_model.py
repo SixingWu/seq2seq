@@ -9,8 +9,8 @@ import math
 import shutil
 import itertools
 from collections import OrderedDict
-from translate import utils, evaluation
-from translate.seq2seq_model import Seq2SeqModel
+from seq2seq_models import utils, evaluation
+from seq2seq_models.seq2seq_model import Seq2SeqModel
 from subprocess import Popen, PIPE
 
 
@@ -544,7 +544,7 @@ class TranslationModel:
         if any(lower(score_, score) for score_, _ in best_scores) or not best_scores:
             # if this checkpoint is in the top, save it under a special name
 
-            prefix = 'translate-{}.'.format(step)
+            prefix = 'seq2seq_models-{}.'.format(step)
             dest_prefix = 'best-{}.'.format(step)
 
             for filename in os.listdir(self.checkpoint_dir):
@@ -690,7 +690,7 @@ def load_checkpoint(sess, checkpoint_dir, filename=None, blacklist=(), prefix=No
 
 def save_checkpoint(sess, saver, checkpoint_dir, step=None, name=None):
     var_file = os.path.join(checkpoint_dir, 'vars.pkl')
-    name = name or 'translate'
+    name = name or 'seq2seq_models'
     os.makedirs(checkpoint_dir, exist_ok=True)
 
     with open(var_file, 'wb') as f:

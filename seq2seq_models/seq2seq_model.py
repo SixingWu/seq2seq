@@ -3,10 +3,10 @@ import tensorflow as tf
 import re
 import functools
 
-from translate import utils
-from translate import models
-from translate import evaluation
-from translate import beam_search
+from seq2seq_models import utils
+from seq2seq_models import models
+from seq2seq_models import evaluation
+from seq2seq_models import beam_search
 from collections import namedtuple
 
 
@@ -34,6 +34,7 @@ class Seq2SeqModel(object):
         dropout_on = []
         dropout_off = []
 
+        # 定义Dropout
         if use_dropout:
             for encoder_or_decoder in encoders + decoders:
                 names = ['rnn_input', 'rnn_output', 'rnn_state', 'initial_state', 'word', 'input_layer', 'output',
@@ -56,6 +57,7 @@ class Seq2SeqModel(object):
         self.feed_previous = tf.constant(feed_previous, dtype=tf.float32)
         self.feed_argmax = tf.constant(True, dtype=tf.bool)  # feed with argmax or sample from softmax
 
+        # 定义不同的encoder输入
         self.encoder_inputs = []
         self.encoder_input_length = []
         for encoder in encoders:

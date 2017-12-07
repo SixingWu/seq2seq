@@ -11,9 +11,9 @@ import tarfile
 
 from pprint import pformat
 from operator import itemgetter
-from translate import utils
-from translate.translation_model import TranslationModel
-from translate.multitask_model import MultiTaskModel
+from seq2seq_models import utils
+from seq2seq_models.translation_model import TranslationModel
+from seq2seq_models.multitask_model import MultiTaskModel
 
 parser = argparse.ArgumentParser()
 parser.add_argument('config', help='load a configuration file in the YAML format')
@@ -29,8 +29,8 @@ parser.add_argument('--purge', action='store_true', help='remove previous model 
 parser.add_argument('--crash-test', action='store_const', const=True, help='build dummy batch with the longest sentences to test the memory usage')
 
 # Available actions (exclusive)
-parser.add_argument('--decode', nargs='*', help='translate this corpus (corpus name or list of files for each encoder)')
-parser.add_argument('--align', nargs='*', help='translate and show alignments by the attention mechanism')
+parser.add_argument('--decode', nargs='*', help='seq2seq_models this corpus (corpus name or list of files for each encoder)')
+parser.add_argument('--align', nargs='*', help='seq2seq_models and show alignments by the attention mechanism')
 parser.add_argument('--eval', nargs='*', help='compute BLEU score on this corpus (corpus name or source files and target file)')
 parser.add_argument('--train', action='store_true', help='train an NMT model')
 parser.add_argument('--save', action='store_true')
@@ -64,7 +64,7 @@ parser.add_argument('--align-encoder-id', type=int, default=0, help='id of the e
 
 def main(args=None):
     args = parser.parse_args(args)
-
+    print('start working')
     # read config file and default config
     with open('config/default.yaml') as f:
         default_config = utils.AttrDict(yaml.safe_load(f))
@@ -122,9 +122,9 @@ def main(args=None):
     tar_path =  os.path.join(config.model_dir, 'code.tar.gz')
     if args.train and not os.path.exists(tar_path):
         with tarfile.open(tar_path, "w:gz") as tar:
-            for filename in os.listdir('translate'):
+            for filename in os.listdir('seq2seq_models'):
                 if filename.endswith('.py'):
-                    tar.add(os.path.join('translate', filename), arcname=filename)
+                    tar.add(os.path.join('seq2seq_models', filename), arcname=filename)
 
     logging_level = logging.DEBUG if args.verbose else logging.INFO
     # always log to stdout in decoding and eval modes (to avoid overwriting precious train logs)
