@@ -8,7 +8,4 @@ data_dir=data/DisTest
 rm -rf ${data_dir}
 mkdir -p ${data_dir}
 
-scripts/prepare-data.py ${raw_data}/DiaTest post response ${data_dir} --no-tokenize \
---dev-corpus ${raw_data}/train \
---test-corpus ${raw_data}/test \
---vocab-size 30000 --shuffle --seed 1234
+prepare-data.py rawdata/DiaTest/huawei message response data/DiaTest  --no-tokenize --test-size 10000 --dev-size 10000 --vocab-size 30000 --shuffle --seed 1234

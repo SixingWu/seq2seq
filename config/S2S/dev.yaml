@@ -34,9 +34,9 @@ final_state: last
 weight_scale: 0.01
 
 encoders:
-  - name: en
+  - name: message
 
 decoders:
-  - name: fr
+  - name: response
 
 orthogonal_init: True
