@@ -55,6 +55,8 @@ def open_files(names, mode='r'):
     Example:
     >>> with open_files(['foo.txt', 'bar.csv']) as (f1, f2):
     ...   pass
+
+    连续打开一系列文件
     """
 
     files = []

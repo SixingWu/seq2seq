@@ -119,6 +119,7 @@ def main(args=None):
         shutil.copy('config/default.yaml', config_path)
 
     # copy source code to model directory
+    # 将当前的代码和配置打包，方便后面的复现？拷贝所有py文件到一个压缩包里面
     tar_path =  os.path.join(config.model_dir, 'code.tar.gz')
     if args.train and not os.path.exists(tar_path):
         with tarfile.open(tar_path, "w:gz") as tar:
