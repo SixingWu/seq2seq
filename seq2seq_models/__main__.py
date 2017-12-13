@@ -21,6 +21,7 @@ parser.add_argument('config', help='load a configuration file in the YAML format
 parser.add_argument('-v', '--verbose', action='store_true', help='verbose mode')
 parser.add_argument('--debug', action='store_true', help='debug mode')
 
+
 # using 'store_const' instead of 'store_true' so that the default value is `None` instead of `False`
 parser.add_argument('--reset', action='store_const', const=True, help="reset model (don't load any checkpoint)")
 parser.add_argument('--reset-learning-rate', action='store_const', const=True, help='reset learning rate')

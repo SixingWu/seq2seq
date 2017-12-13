@@ -72,6 +72,10 @@ character_level: False   # character-level sequences
 max_len: 50              # max length of the input and output sequences (strongly affects speed and memory usage)
 truncate_lines: True     # if True truncate lines which are too long, otherwise just drop them
 
+# TODO embedding settings
+shared_vocab: False      # encoder and decoder will share a same vocabulary
+shared_embedding: False  # encoder and decoder will share a same embedding matrix, it is not workable if shared_vocab is set to False
+
 # encoder settings
 bidir: True              # use bidirectional encoders
 attention_type: global   # global, local, none, last_state, average
@@ -105,6 +109,7 @@ pred_embed_proj: True     # project decoder output to embedding size before proj
 pred_deep_layer: False    # add a non-linear transformation just before softmax
 pred_maxout_layer: True   # use a maxout layer just before the vocabulary projection and softmax
 aggregation_method: concat # how to combine the attention contexts of multiple encoders (concat, sum)
+
 
 # data
 max_train_size: 0        # maximum size of the training data (0 for unlimited)

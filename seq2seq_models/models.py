@@ -85,6 +85,8 @@ def multi_encoder(encoder_inputs, encoders, encoder_input_length, other_inputs=N
             initializer = None
 
         device = '/cpu:0' if encoder.embeddings_on_cpu else None
+
+        #TODO: 在这里是否需要和 Decoder Share 一下Embedding Matrix
         with tf.device(device):  # embeddings can take a very large amount of memory, so
             # storing them in GPU memory can be impractical
             embedding = get_variable('embedding_{}'.format(encoder.name), shape=embedding_shape,
@@ -896,6 +898,7 @@ def attention_decoder(decoder_inputs, initial_state, attention_states, encoders,
     return outputs, weights, states, attns, samples, get_logits, initial_data
 
 
+# 最普遍使用的一个encoder_decoder
 def encoder_decoder(encoders, decoders, encoder_inputs, targets, feed_previous, align_encoder_id=0,
                     encoder_input_length=None, feed_argmax=True, rewards=None, use_baseline=True, **kwargs):
     decoder = decoders[0]
