@@ -1,6 +1,8 @@
 label: "Conversation Dev"
 description: "Neural Conversation System Baseline Dev"
 
+chatbot_mode: True
+
 cell_size: 1000
 attn_size: 1000
 embedding_size: 620

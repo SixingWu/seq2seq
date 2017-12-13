@@ -29,6 +29,9 @@ This is the same model and dataset as [Bahdanau et al. 2015](https://arxiv.org/a
     config/WMT14/prepare.sh     # preprocess the data, and copy the files to data/WMT14
     ./seq2seq.sh config/WMT14/baseline.yaml --train -v   # train a baseline model on this data
 
+    ./seq2seq.sh config/S2S/dev.yaml --train -v   # train a baseline model on this data
+    ./seq2seq.sh config/S2S/dev.yaml --decode -v   # test a baseline model on this data
+
 You should get similar BLEU scores as these (our model was trained on a single Titan X I for about 4 days).
 
 | Dev   | Test  | +beam | Steps | Time |

@@ -14,6 +14,7 @@ from operator import itemgetter
 from seq2seq_models import utils
 from seq2seq_models.translation_model import TranslationModel
 from seq2seq_models.multitask_model import MultiTaskModel
+from seq2seq_models.nerual_response_model import NeuralResponseModel
 
 parser = argparse.ArgumentParser()
 parser.add_argument('config', help='load a configuration file in the YAML format')
@@ -34,6 +35,7 @@ parser.add_argument('--align', nargs='*', help='seq2seq_models and show alignmen
 parser.add_argument('--eval', nargs='*', help='compute BLEU score on this corpus (corpus name or source files and target file)')
 parser.add_argument('--train', action='store_true', help='train an NMT model')
 parser.add_argument('--save', action='store_true')
+
 
 # TensorFlow configuration
 parser.add_argument('--gpu-id', type=int, help='index of the GPU where to run the computation')
@@ -207,6 +209,8 @@ def main(args=None):
 
         if config.tasks is not None:
             model = MultiTaskModel(**config)
+        elif config.chatbot_mode:
+            model = NeuralResponseModel(**config)
         else:
             model = TranslationModel(**config)
 
@@ -215,7 +219,7 @@ def main(args=None):
     variables = [var for var in tf.global_variables() if not var.name.startswith('gradients')]
     utils.log('model parameters ({})'.format(len(variables)))
     parameter_count = 0
-    for var in sorted(variables, key=lambda var: var.name):
+    for var in sorted(variables, key=lambda var: var.name): # 计算参数的数量！！
         utils.log('  {} {}'.format(var.name, var.get_shape()))
         v = 1
         for d in var.get_shape():

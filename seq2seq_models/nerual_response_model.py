@@ -14,7 +14,7 @@ from seq2seq_models.seq2seq_model import Seq2SeqModel
 from subprocess import Popen, PIPE
 
 
-class TranslationModel:
+class NeuralResponseModel:
     def __init__(self, encoders, decoders, checkpoint_dir, learning_rate, learning_rate_decay_factor,
                  batch_size, keep_best=1, dev_prefix=None, score_function='corpus_scores', name=None, ref_ext=None,
                  pred_edits=False, dual_output=False, binary=None, truncate_lines=True, ensemble=False,
@@ -24,13 +24,13 @@ class TranslationModel:
         self.character_level = {}
         self.binary = []
 
+        # 其实是参数
         for encoder_or_decoder in encoders + decoders:
             encoder_or_decoder.ext = encoder_or_decoder.ext or encoder_or_decoder.name
             self.character_level[encoder_or_decoder.ext] = encoder_or_decoder.character_level
             self.binary.append(encoder_or_decoder.get('binary', False))
 
         self.char_output = decoders[0].character_level
-
         self.src_ext = [encoder.ext for encoder in encoders]
         self.trg_ext = [decoder.ext for decoder in decoders]
 
@@ -49,7 +49,7 @@ class TranslationModel:
         self.max_input_len = [encoder.max_len for encoder in encoders]
         self.max_output_len = [decoder.max_len for decoder in decoders]
 
-        if truncate_lines:
+        if truncate_lines: # 截断
             self.max_len = None   # we let seq2seq.get_batch handle long lines (by truncating them)
         else:  # the line reader will drop lines that are too long
             self.max_len = dict(zip(self.extensions, self.max_input_len + self.max_output_len))

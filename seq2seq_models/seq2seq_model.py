@@ -75,7 +75,7 @@ class Seq2SeqModel(object):
             for decoder in decoders
         ])
         self.rewards = tf.placeholder(tf.float32, shape=[None, None], name='rewards')
-
+        # 这里才定义具体用哪种model
         if chained_encoders and pred_edits:
              architecture = models.chained_encoder_decoder    # no REINFORCE for now
         else:
