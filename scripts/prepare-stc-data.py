@@ -88,7 +88,7 @@ def create_vocabulary(filename, output_filename, size, character_level=False, mi
     with open(filename) as input_file, \
          open(output_filename, 'w') as output_file:
         for line in input_file:
-            line = line.strip() if character_level else line.split()
+            line = line.replace(' ','') if character_level else line.split()
 
             for w in line:
                 vocab[w] += 1
@@ -116,7 +116,7 @@ def create_vocabulary_from_files(filenames, output_filename, size, character_lev
         logging.info('counting from {}'.format(filename))
         with open(filename) as input_file:
             for line in input_file:
-                line = line.strip() if character_level else line.split()
+                line = line.replace(' ', '')if character_level else line.split()
                 for w in line:
                     vocab[w] += 1
 

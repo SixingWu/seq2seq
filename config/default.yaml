@@ -50,7 +50,7 @@ batch_size: 80           # batch size (during training and greedy decoding)
 batch_mode: standard     # standard (cycle through train set) or random (sample from train set)
 shuffle: True            # shuffle dataset at each new epoch
 read_ahead: 10           # number of batches to read ahead and sort by sequence length (can speed up training)
-reverse_input: False     # reverse input sequences
+reverse_input: True     # reverse input sequences
 
 # reinforce parameters
 loss_function: xent            # 'xent' or 'reinforce'
@@ -152,5 +152,8 @@ encoders:                # this is a list (you can specify several encoders)
   - name: fr             # each encoder or decoder has a name (used for naming variables) and an extension (for files)
     ext: fr              # If undefined, `ext` is the same as `name`
 
+
 decoders:                # Each encoder or decoder can redefine its own values for a number of parameters,
   - name: en             # including `cell_size`, `embedding_size` and `attn_size`
+
+shared_name : 'shared'

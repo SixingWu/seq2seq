@@ -193,6 +193,7 @@ def get_filenames(data_dir, model_dir, extensions, train_prefix, dev_prefix, voc
     :param kwargs: optional contains an additional 'decode', 'eval' or 'align' parameter
     :return: namedtuple containing the filenames
     """
+
     train_path = os.path.join(data_dir, train_prefix)
     dev_path = [os.path.join(data_dir, prefix) for prefix in dev_prefix]
 
@@ -204,8 +205,15 @@ def get_filenames(data_dir, model_dir, extensions, train_prefix, dev_prefix, voc
 
     dev = [['{}.{}'.format(path, ext) for ext in dev_extensions] for path in dev_path]
 
+    shared_vocab = kwargs['shared_vocab']
+    shared_name = kwargs['shared_name']
     vocab_path = os.path.join(data_dir, vocab_prefix)
-    vocab_src = ['{}.{}'.format(vocab_path, ext) for ext in extensions]
+    if shared_vocab is False:
+        log('loading the separate vocabs')
+        vocab_src = ['{}.{}'.format(vocab_path, ext) for ext in extensions]
+    else:
+        log('loading the shared vocabs')
+        vocab_src = ['{}.{}'.format(vocab_path, shared_name) for ext in extensions]
 
     data = 'data' if name is None else 'data_{}'.format(name)
     vocab_path = os.path.join(model_dir, data, 'vocab')

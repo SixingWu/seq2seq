@@ -86,11 +86,17 @@ def multi_encoder(encoder_inputs, encoders, encoder_input_length, other_inputs=N
 
         device = '/cpu:0' if encoder.embeddings_on_cpu else None
 
-        #TODO: 在这里是否需要和 Decoder Share 一下Embedding Matrix
+
         with tf.device(device):  # embeddings can take a very large amount of memory, so
             # storing them in GPU memory can be impractical
-            embedding = get_variable('embedding_{}'.format(encoder.name), shape=embedding_shape,
-                                     initializer=initializer)
+            if encoder.shared_embedding:
+                utils.log('using shared embedding matrix: embedding_{}'.format(encoder.shared_name))
+                embedding = get_variable('embedding_{}'.format(encoder.shared_name), shape=embedding_shape,
+                                         initializer=initializer)
+            else:
+                utils.log('using separate embedding matrix: embedding_{}'.format(encoder.name))
+                embedding = get_variable('embedding_{}'.format(encoder.name), shape=embedding_shape,
+                                         initializer=initializer)
         embedding_variables.append(embedding)
 
     new_encoder_input_length = []
@@ -595,8 +601,13 @@ def attention_decoder(decoder_inputs, initial_state, attention_states, encoders,
 
     device = '/cpu:0' if decoder.embeddings_on_cpu else None
     with tf.device(device):
-        embedding = get_variable('embedding_{}'.format(decoder.name), shape=embedding_shape, initializer=initializer)
-
+        if decoder.shared_embedding:
+            utils.log('using shared embedding matrix: embedding_{}'.format(decoder.shared_name))
+            embedding = get_variable('embedding_{}'.format(decoder.shared_name), shape=embedding_shape, initializer=initializer)
+        else:
+            utils.log('using separate embedding matrix: embedding_{}'.format(decoder.name))
+            embedding = get_variable('embedding_{}'.format(decoder.name), shape=embedding_shape,
+                                     initializer=initializer)
     input_shape = tf.shape(decoder_inputs)
     batch_size = input_shape[0]
     time_steps = input_shape[1]
