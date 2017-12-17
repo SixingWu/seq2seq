@@ -405,6 +405,9 @@ if __name__ == '__main__':
     parser.add_argument('--vocab-path', help='path to existing vocabularies (corpus prefix)')
     parser.add_argument('--threads', type=int, default=16)
 
+    # 共享词表设置
+    parser.add_argument('--shared-vocab', help='shared-vocab', action='store_false')
+
     args = parser.parse_args()
 
     def fixed_length_arg(name, value, length):
