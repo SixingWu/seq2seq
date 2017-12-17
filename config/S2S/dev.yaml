@@ -17,7 +17,7 @@ max_train_size: 1000000
 steps_per_checkpoint: 10000
 steps_per_eval: 10000
 score_function: corpus_bleu
-keep_best: 1
+keep_best: 10
 max_to_keep: null
 
 optimizer: adam
@@ -42,3 +42,7 @@ decoders:
   - name: response
 
 orthogonal_init: True
+
+
+shared_vocab: True      # encoder and decoder will share a same vocabulary
+shared_embedding: True  # encoder and decoder will share a same embedding matrix, it is not workable if shared
