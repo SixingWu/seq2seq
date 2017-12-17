@@ -105,6 +105,34 @@ def create_vocabulary(filename, output_filename, size, character_level=False, mi
 
     return dict(map(reversed, enumerate(vocab_list)))
 
+# 从多个文件都读取文件来输出
+def create_vocabulary_from_files(filenames, output_filename, size, character_level=False, min_count=1):
+    logging.info('creating vocabulary from following files:')
+    for filename in filenames:
+        logging.info('corpus :{}'.format(filename))
+
+    vocab = Counter()
+    for filename in filenames:
+        logging.info('counting from {}'.format(filename))
+        with open(filename) as input_file:
+            for line in input_file:
+                line = line.strip() if character_level else line.split()
+                for w in line:
+                    vocab[w] += 1
+
+    with open(output_filename, 'w') as output_file:
+        logging.info('writing to {}'.format(output_filename))
+        if min_count > 1:
+            vocab = {w: c for (w, c) in vocab.items() if c >= min_count}
+
+        vocab = {w: c for (w, c) in vocab.items() if w not in _START_VOCAB}
+        vocab_list = _START_VOCAB + sorted(vocab, key=lambda w: (-vocab[w], w))
+        if 0 < size < len(vocab_list):
+            vocab_list = vocab_list[:size]
+
+        output_file.writelines(w + '\n' for w in vocab_list)
+
+    return dict(map(reversed, enumerate(vocab_list)))
 
 def process_file(filename, lang, ext, args):
     logging.info('processing ' + filename)
@@ -298,34 +326,65 @@ def process_corpora(args, corpora, output_corpora, sizes):
 
 
 def process_vocabularies(args, corpora):
-    ## create vocabularies
-    vocab_output_filenames = [
-        os.path.join(args.output_dir, '{}.{}'.format(args.vocab_prefix, ext))
-        for ext in args.extensions
-    ]
 
-    if args.vocab_path is not None:
-        # copy vocabularies if necessary
-        for vocab_filename, output_filename in zip(args.vocab_path,
-                                                   vocab_output_filenames):
-            if vocab_filename != output_filename:
-                shutil.copy(vocab_filename, output_filename)
-        return
 
-    logging.info('creating vocabulary files')
-    # training corpus is used to create vocabulary
-    train_corpus = corpora[-1]
+    if args.shared_vocab:
+        ## create vocabularies
+        vocab_output_filename = os.path.join(args.output_dir, '{}.{}'.format(args.vocab_prefix, 'shared'))
 
-    for filename, output_filename, size, ext, min_count in zip(train_corpus,
-                                                               vocab_output_filenames,
-                                                               args.vocab_size,
-                                                               args.extensions,
-                                                               args.min_count):
+
+        if args.vocab_path is not None:
+            assert len(args.bocab_path) == 0, 'to share the vocabulary between encoder and decoder,\'' \
+                                              'please set a single path'
+            vocab_filename = args.vocab_path[0]
+            if vocab_filename != vocab_output_filename:
+                shutil.copy(vocab_filename, vocab_output_filename)
+            return
+
+        logging.info('creating vocabulary files')
+        # training corpus is used to create vocabulary
+        train_corpus = corpora[-1]
+        logging.info('building a shared vocabulary')
+        filenames = train_corpus
+        output_filename = vocab_output_filename
+        size = args.vocab_size
+        ext = args.extensions
+        min_count = args.min_count
         if ext in args.subwords:
             size = 0
-
         character_level = ext in args.character_level
-        create_vocabulary(filename, output_filename, size, character_level, min_count)
+        create_vocabulary_from_files(filenames, output_filename, size, character_level, min_count)
+
+        pass
+    else:
+        logging.info('building a distinct vocabulary for each side')
+        ## create vocabularies
+        vocab_output_filenames = [
+            os.path.join(args.output_dir, '{}.{}'.format(args.vocab_prefix, ext))
+            for ext in args.extensions
+        ]
+
+        if args.vocab_path is not None:
+            # copy vocabularies if necessary
+            for vocab_filename, output_filename in zip(args.vocab_path,
+                                                       vocab_output_filenames):
+                if vocab_filename != output_filename:
+                    shutil.copy(vocab_filename, output_filename)
+            return
+
+        logging.info('creating vocabulary files')
+        # training corpus is used to create vocabulary
+        train_corpus = corpora[-1]
+        for filename, output_filename, size, ext, min_count in zip(train_corpus,
+                                                                   vocab_output_filenames,
+                                                                   args.vocab_size,
+                                                                   args.extensions,
+                                                                   args.min_count):
+            if ext in args.subwords:
+                size = 0
+
+            character_level = ext in args.character_level
+            create_vocabulary(filename, output_filename, size, character_level, min_count)
 
 
 if __name__ == '__main__':
@@ -406,7 +465,7 @@ if __name__ == '__main__':
     parser.add_argument('--threads', type=int, default=16)
 
     # 共享词表设置
-    parser.add_argument('--shared-vocab', help='shared-vocab', action='store_false')
+    parser.add_argument('--shared-vocab', help='shared-vocab', action='store_true')
 
     args = parser.parse_args()
 
