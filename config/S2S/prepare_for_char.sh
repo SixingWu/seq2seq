@@ -1,0 +1,1 @@
+ python3 scripts/prepare-stc-data.py rawdata/DiaTest/huaweiFull message response data/DiaTestCharLevel  --no-tokenize --test-size 100000 --dev-size 100000 --vocab-size 50000 --shuffle --seed 1234 --verbose --shared-vocab --character-level
