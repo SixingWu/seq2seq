@@ -347,9 +347,9 @@ def process_vocabularies(args, corpora):
         logging.info('building a shared vocabulary')
         filenames = train_corpus
         output_filename = vocab_output_filename
-        size = args.vocab_size
-        ext = args.extensions
-        min_count = args.min_count
+        size = args.vocab_size[0]
+        ext = args.extensions[0]
+        min_count = args.min_count[0]
         if ext in args.subwords:
             size = 0
         character_level = ext in args.character_level
