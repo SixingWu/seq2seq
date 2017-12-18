@@ -34,7 +34,7 @@ parser.add_argument('--crash-test', action='store_const', const=True, help='buil
 parser.add_argument('--decode', nargs='*', help='seq2seq_models this corpus (corpus name or list of files for each encoder)')
 parser.add_argument('--align', nargs='*', help='seq2seq_models and show alignments by the attention mechanism')
 parser.add_argument('--eval', nargs='*', help='compute BLEU score on this corpus (corpus name or source files and target file)')
-parser.add_argument('--train', action='store_true', help='train an NMT model')
+parser.add_argument('--train', action='store_true', help='train an model')
 parser.add_argument('--save', action='store_true')
 
 
