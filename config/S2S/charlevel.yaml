@@ -10,14 +10,14 @@ bidir: True
 cell_type: GRU
 
 data_dir: data/DiaTestCharLevel
-max_len: 140
+max_len: 70
 model_dir: models/S2S/DiaTest/char_level
 max_train_size: 1000000
 
 steps_per_checkpoint: 10000
-steps_per_eval: 10000
+steps_per_eval: 5000
 score_function: corpus_bleu
-keep_best: 10
+keep_best: 5
 max_to_keep: null
 
 optimizer: adam
@@ -35,8 +35,10 @@ final_state: last
 
 weight_scale: 0.01
 
+character_level: True
 encoders:
   - name: message
+
 
 decoders:
   - name: response

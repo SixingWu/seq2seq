@@ -38,10 +38,12 @@ weight_scale: 0.01
 encoders:
   - name: message
 
+
 decoders:
   - name: response
 
 orthogonal_init: True
+character_level: True
 
 
 shared_vocab: True      # encoder and decoder will share a same vocabulary
