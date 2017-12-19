@@ -168,15 +168,17 @@ def process_file(filename, lang, ext, args):
             processes.append([path_to('escape-special-chars.perl')])
 
         ps = None
+        try:
+            for i, process in enumerate(processes):
+                stdout = output_ if i == len(processes) - 1 else subprocess.PIPE
+                stdin = input_ if i == 0 else ps.stdout
 
-        for i, process in enumerate(processes):
-            stdout = output_ if i == len(processes) - 1 else subprocess.PIPE
-            stdin = input_ if i == 0 else ps.stdout
+                ps = subprocess.Popen(process, stdin=stdin, stdout=stdout,
+                                      stderr=open('/dev/null', 'w'))
 
-            ps = subprocess.Popen(process, stdin=stdin, stdout=stdout,
-                                  stderr=open('/dev/null', 'w'))
-
-        ps.wait()
+            ps.wait()
+        except Exception as e:
+            print(e)
         return output_.name
 
 
