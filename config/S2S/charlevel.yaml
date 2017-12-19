@@ -3,9 +3,9 @@ description: "Neural Conversation System Baseline Dev"
 
 chatbot_mode: True
 
-cell_size: 256
-attn_size: 256
-embedding_size: 240
+cell_size: 512
+attn_size: 512
+embedding_size: 320
 bidir: True
 cell_type: GRU
 
@@ -22,7 +22,7 @@ max_to_keep: null
 
 optimizer: adam
 learning_rate: 0.0002
-batch_size: 128
+batch_size: 160
 batch_mode: standard
 read_ahead: 20
 max_gradient_norm: 1.0
