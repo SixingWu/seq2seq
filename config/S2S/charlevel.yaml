@@ -3,15 +3,15 @@ description: "Neural Conversation System Baseline Dev"
 
 chatbot_mode: True
 
-cell_size: 1000
-attn_size: 1000
-embedding_size: 620
+cell_size: 256
+attn_size: 256
+embedding_size: 240
 bidir: True
 cell_type: GRU
 
-data_dir: data/DiaTestCharLevel
+data_dir: data/CharLevel
 max_len: 70
-model_dir: models/S2S/DiaTest/char_level
+model_dir: models/S2S/Char_level
 max_train_size: 1000000
 
 steps_per_checkpoint: 5000
@@ -22,7 +22,7 @@ max_to_keep: null
 
 optimizer: adam
 learning_rate: 0.0002
-batch_size: 80
+batch_size: 128
 batch_mode: standard
 read_ahead: 20
 max_gradient_norm: 1.0
@@ -48,3 +48,14 @@ orthogonal_init: True
 
 shared_vocab: True      # encoder and decoder will share a same vocabulary
 shared_embedding: True  # encoder and decoder will share a same embedding matrix, it is not workable if shared
+
+pervasive_dropout: True  # same dropout mask for all elements in same batch/same sequence (see Gal, 2015)
+rnn_input_dropout: 0.2
+rnn_output_dropout: 0.2
+rnn_state_dropout: 0.2
+initial_state_dropout: 0.2
+word_dropout: 0.2
+input_layer_dropout: 0.2
+output_dropout: 0.2      # TODO
+use_dropout: True
+layer_norm: False
