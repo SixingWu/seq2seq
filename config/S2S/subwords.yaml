@@ -3,15 +3,16 @@ description: "Neural Conversation System Baseline Dev"
 
 chatbot_mode: True
 
-cell_size: 512
-attn_size: 512
-embedding_size: 320
+cell_size: 384
+attn_size: 384
+embedding_size: 256
 bidir: True
 cell_type: GRU
+layers: 2
 
 data_dir: data/SubLevel
 max_len: 35
-model_dir: models/S2S/Sub_level
+model_dir: models/S2S/Sub_level2
 max_train_size: 1000000
 
 steps_per_checkpoint: 5000
