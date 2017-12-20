@@ -12,7 +12,7 @@ sgd_learning_rate: 1.0      # SGD can start at a different learning rate (useful
 learning_rate_decay_factor: 0.9  # decay the learning rate by this factor at a given frequency
 decay_every_n_epoch: 0.2   # self explanatory, can be lower than one (e.g. 0.5 for every half epoch)
 decay_after_n_epoch: 0.5      # start decaying learning rate after this many epochs
-decay_if_no_progress: 0.8  # measure average loss over this many checkpoints, and decay if no progress
+decay_if_no_progress: 5  # measure average loss over this many checkpoints, and decay if no progress
 sgd_after_n_epoch: null     # start using SGD optimizer after this many epochs (instead of Adam/AdaDelta)
 min_learning_rate: 0.000001 # stop training when learning rate is smaller than this
 
