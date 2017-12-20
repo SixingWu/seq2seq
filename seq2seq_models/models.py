@@ -798,7 +798,7 @@ def attention_decoder(decoder_inputs, initial_state, attention_states, encoders,
 
     def get_logits(state, ids, time):  # for beam-search decoding
         with tf.variable_scope('decoder_{}'.format(decoder.name)):
-            state, pos, prev_weights = tf.split(state, [state_size, 1, -1], axis=1)
+            state, context, pos, prev_weights = tf.split(state, [state_size, 1, -1], axis=1)
             input_ = embed(ids)
 
             pos = tf.squeeze(pos, axis=1)
