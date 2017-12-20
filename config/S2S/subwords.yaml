@@ -7,7 +7,7 @@ cell_size: 240
 attn_size: 240
 embedding_size: 160
 bidir: True
-cell_type: LSTM
+cell_type: GRU
 layers: 2
 
 data_dir: data/SubLevel2
