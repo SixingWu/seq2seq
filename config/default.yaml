@@ -7,12 +7,12 @@ description: |
   last line
 
 # SGD parameters
-learning_rate: 0.001        # initial learning rate
+learning_rate: 1.0 # 0.001        # initial learning rate
 sgd_learning_rate: 1.0      # SGD can start at a different learning rate (useful for switching between Adam and SGD)
-learning_rate_decay_factor: 1.0  # decay the learning rate by this factor at a given frequency
-decay_every_n_epoch: null   # self explanatory, can be lower than one (e.g. 0.5 for every half epoch)
-decay_after_n_epoch: 0      # start decaying learning rate after this many epochs
-decay_if_no_progress: null  # measure average loss over this many checkpoints, and decay if no progress
+learning_rate_decay_factor: 0.9  # decay the learning rate by this factor at a given frequency
+decay_every_n_epoch: 0.2   # self explanatory, can be lower than one (e.g. 0.5 for every half epoch)
+decay_after_n_epoch: 0.5      # start decaying learning rate after this many epochs
+decay_if_no_progress: 0.8  # measure average loss over this many checkpoints, and decay if no progress
 sgd_after_n_epoch: null     # start using SGD optimizer after this many epochs (instead of Adam/AdaDelta)
 min_learning_rate: 0.000001 # stop training when learning rate is smaller than this
 
@@ -22,10 +22,10 @@ steps_per_checkpoint: 10000   # number of SGD updates between each checkpoint
 steps_per_eval: 10000    # number of SGD updates between each BLEU eval (on dev set)
 eval_burn_in: 0          # minimum number of updates before starting BLEU eval
 max_steps: 0             # maximum number of updates before stopping
-max_epochs: 0            # maximum number of epochs before stopping
+max_epochs: 10            # maximum number of epochs before stopping
 keep_best: 4             # number of best checkpoints to keep (based on BLEU score on dev set)
 feed_previous: 0.0       # randomly feed prev output instead of ground truth to decoder during training ([0,1] proba)
-optimizer: adam          # which training algorithm to use ('sgd', 'adadelta', or 'adam')
+optimizer: sgd          # which training algorithm to use ('sgd', 'adadelta', or 'adam')
 moving_average: null     # TODO
 
 # dropout
